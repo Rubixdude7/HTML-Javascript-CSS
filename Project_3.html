@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- Nolan Aubuchon -->
+<html>
+	<head>
+		<title>CS 360 Project 3: WYSIWYG Parsing Problem</title>
+		<script language="javascript" type="text/javascript">
+			var toggle = false; <!-- True is toggle button is pressed an odd number of times\
+			var toggle_str = "";
+			var parser = new DOMParser();
+			function parseToggle()
+			{
+				toggle_str = toggle ? "DOM to HTML" : "HTML to DOM";
+				document.getElementById("toggleText").innerHTML = toggle_str;
+				return toggle_str;
+			}
+			function parseSubmit()
+			{
+				if(toggle)
+				{
+					domToHtml();
+				}
+				else
+				{
+					htmlToDom();
+				}
+			}
+			function invertAndParse()
+			{
+				toggle = !toggle;
+				return parseToggle();
+			}
+			function htmlToDom()
+			{
+				var doc = parser.parseFromString(document.getElementById("htmlString").value,"text/html");
+				var outText = "    <head>\n" + "        " + doc.head.innerHTML + "\n    </head>";
+				outText = outText + "\n    <body>\n" + "        " + doc.body.innerHTML + "\n    </body>"; 
+				document.getElementById("domTree").value = "<html>\n" + outText + "\n</html>";
+				return;
+			}
+			function domToHtml()
+			{
+				var doc = parser.parseFromString(document.getElementById("domTree").value,"text/html");
+				var outText = "<html><head>" + doc.head.innerHTML.trim() + "</head><body>";
+				outText = outText +  doc.body.innerHTML.trim() + "</body></html>";
+				document.getElementById("htmlString").value = outText;
+				return;
+			}
+		</script>
+	</head>
+	
+	<body onload="parseToggle();">
+		<h1>HTML Parsing Problem</h1>
+		<h2>CS 360</h2>
+		<div id="toggleText">
+			variable text goes here
+		</div>
+		<hr />
+		<form>
+			<textarea id="htmlString" rows="12" cols="100" name="string">Enter HTML string here</textarea>
+			<textarea id="domTree" rows="12" cols="100" name="tree">Enter DOM tree</textarea> 
+			<br/>
+			<hr />
+			<input type="button" name="submit" value="Submit" onclick="parseSubmit();"/>
+			<input type="button" name="toggle" value="Toggle" onclick="invertAndParse();"/>
+		</form>
+	</body>
+</html>

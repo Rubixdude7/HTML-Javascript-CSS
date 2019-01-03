@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html onkeydown="secret(19);" onmousewheel="secret(7);" onkeyup="secret(33);">
+	<head>
+		<title>Treaure Hunt</title>
+		<script type="text/javascript">
+			var hClicks = 0; <!-- Number of Heart button clicks -->
+			var sClicks = 0; <!-- Number of Spade button clicks -->
+			var dClicks = 0; <!-- Number of Diamond button clicks -->
+			var cClicks = 0; <!-- Number of Club button clicks -->
+			function secret(num){ <!--Secrets 3, 7, 10, 19, 20, 33, 42 call this--> 
+			
+				alert("You found secret #" + num);
+		    }
+			function secretIf(condition,num){
+			
+			}
+			function secret20(){
+				if(hClicks > 1 && sClicks > 1 && dClicks > 1 && cClicks > 1)
+					secret(20);
+			}
+		</script>
+	</head>
+
+	<body alink="#000000" link="#000000" vlink="#000000">
+	<audio src="HexagonForce.mp3" autoplay loop>
+		audio not supported :(
+	</audio>
+	<h1>Treasure Hunt</h1>
+	<table border="1" cellpadding="10" cellspacing="3">
+		<tr> 
+			<th>XXXXX</th>
+			<th>A</th>
+			<th>2</th>
+			<th>3</th>
+			<th>4</th>
+			<th>5</th>
+			<th>6</th>
+			<th>7</th>
+			<th>8</th>
+			<th style="cursor:wait">9</th>
+			<th>10</th>
+			<th>J</th>
+			<th>Q</th>
+			<th>K</th>
+		</tr>
+		<tr> <!-- hearts -->
+			<th><input type="button" value="&#9829" onclick="hClicks++;"/></th>
+			<td> A &#9829 </td> 
+			<td> 2 &#9829 </td>
+			<td onclick="secret(3);"> 3 &#9829 </td>
+			<td> 4 &#9829 </td>
+			<td> 5 &#9829 </td>
+			<td> 6 &#9829 </td>
+			<td onmouseover="hClicks = 0;"> 7 &#9829 </td> <!-- Secret #7 called in <html> tag -->
+			<td> 8 &#9829 </td>
+			<td> 9 &#9829 </td>
+			<td ondblclick="secret(10);"> 10 &#9829 </td>
+			<td> J &#9829 </td>
+			<td> Q &#9829 </td>
+			<td> K &#9829 </td>
+		</tr>
+		<tr> <!-- spades -->
+			<th><input type="button" value="&#9824" onclick="sClicks++;"/></th>
+			<td> A &#9824 </td>
+			<td> 2 &#9824 </td>
+			<td> 3 &#9824 </td>
+			<td> 4 &#9824 </td>
+			<td> 5 &#9824 </td>
+			<td onmouseover="sClicks = 0;"> 6 &#9824 </td> <!-- Secret #19 called in <html> tag -->
+			<td onclick="secret20();"> 7 &#9824 </td>
+			<td onclick="if(sClicks == 8) secret(21);"> 8 &#9824 </td>
+			<td> 9 &#9824 </td>
+			<td> 10 &#9824 </td>
+			<td> J &#9824 </td>
+			<td> Q &#9824 </td>
+			<td> K &#9824 </td>
+		</tr>
+		<tr> <!-- diamonds -->
+			<th><input type="button" value="&#9830" onclick="dClicks++;"/></th>
+			<td> A &#9830 </td>
+			<td> 2 &#9830 </td>
+			<td> 3 &#9830 </td>
+			<td> 4 &#9830 </td>
+			<td> 5 &#9830 </td>
+			<td> 6 &#9830 </td>
+			<td onmouseover="dClicks = 0;"> 7 &#9830 </td>
+			<td> 8 &#9830 </td>
+			<td> 9 &#9830 </td>
+			<td> 10 &#9830 </td>
+			<td> J &#9830 </td>
+			<td> Q &#9830 </td>
+			<td> K &#9830 </td>
+		</tr>
+		<tr> <!-- clubs -->
+			<th><input type="button" value="&#9827" onclick="cClicks++;"/></th>
+			<td> A &#9827 </td>
+			<td> 2 &#9827 </td>
+			<td onmouseover="secret(42);"> 3 <a href="TH_Dark_World.html">&#9827 </a></td>
+			<td> 4 &#9827 </td>
+			<td> 5 &#9827 </td>
+			<td> 6 &#9827 </td>
+			<td> 7 &#9827 </td>
+			<td> 8 &#9827 </td>
+			<td> 9 &#9827 </td>
+			<td> 10 &#9827 </td>
+			<td> J &#9827 </td>
+			<td> Q &#9827 </td>
+			<td> K &#9827 </td>
+		</tr>
+	</table>
+	<form>
+	<input type="checkbox" name="subject" value=" 1">  1
+<input type="checkbox" name="subject" value=" 2">  2
+<input type="checkbox" name="subject" value=" 3">  3
+<input type="checkbox" name="subject" value=" 4">  4
+<input type="checkbox" name="subject" value=" 5">  5
+<input type="checkbox" name="subject" value=" 6">  6
+<input type="checkbox" name="subject" value=" 7">  7
+<input type="checkbox" name="subject" value=" 8">  8
+<input type="checkbox" name="subject" value=" 9">  9
+<input type="checkbox" name="subject" value="10"> 10
+<input type="checkbox" name="subject" value="11"> 11
+<input type="checkbox" name="subject" value="12"> 12
+<input type="checkbox" name="subject" value="13"> 13
+<input type="checkbox" name="subject" value="14"> 14
+<input type="checkbox" name="subject" value="15"> 15
+<input type="checkbox" name="subject" value="16"> 16
+<input type="checkbox" name="subject" value="17"> 17
+<input type="checkbox" name="subject" value="18"> 18
+<input type="checkbox" name="subject" value="19"> 19
+<input type="checkbox" name="subject" value="20"> 20
+<input type="checkbox" name="subject" value="21"> 21
+<input type="checkbox" name="subject" value="22"> 22
+<input type="checkbox" name="subject" value="23"> 23
+<input type="checkbox" name="subject" value="24"> 24
+<input type="checkbox" name="subject" value="25"> 25
+<input type="checkbox" name="subject" value="26"> 26
+<input type="checkbox" name="subject" value="27"> 27
+<input type="checkbox" name="subject" value="28"> 28
+<input type="checkbox" name="subject" value="29"> 29
+<input type="checkbox" name="subject" value="30"> 30
+<input type="checkbox" name="subject" value="31"> 31
+<input type="checkbox" name="subject" value="32"> 32
+<input type="checkbox" name="subject" value="33"> 33
+<input type="checkbox" name="subject" value="34"> 34
+<input type="checkbox" name="subject" value="35"> 35
+<input type="checkbox" name="subject" value="36"> 36
+<input type="checkbox" name="subject" value="37"> 37
+<input type="checkbox" name="subject" value="38"> 38
+<input type="checkbox" name="subject" value="39"> 39
+<input type="checkbox" name="subject" value="40"> 40
+<input type="checkbox" name="subject" value="41"> 41
+<input type="checkbox" name="subject" value="42"> 42
+<input type="checkbox" name="subject" value="43"> 43
+<input type="checkbox" name="subject" value="44"> 44
+<input type="checkbox" name="subject" value="45"> 45
+<input type="checkbox" name="subject" value="46"> 46
+<input type="checkbox" name="subject" value="47"> 47
+<input type="checkbox" name="subject" value="48"> 48
+<input type="checkbox" name="subject" value="49"> 49
+<input type="checkbox" name="subject" value="50"> 50
+<input type="checkbox" name="subject" value="51"> 51
+<input type="checkbox" name="subject" value="52"> 52
+</form>
+	</body>
+</html>
