@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html onkeydown="secret(19);" onmousewheel="secret(7);" onkeyup="secret(33);">
+<html onkeydown="secret(19);" onmousewheel="secret(7);" onkeyup="secret(33);" ondblclick="secret(2);" >
 	<head>
 		<title>Treaure Hunt</title>
 		<script type="text/javascript">
@@ -9,7 +9,12 @@
 			var cClicks = 0; <!-- Number of Club button clicks -->
 			function secret(num){ <!--Secrets 3, 7, 10, 19, 20, 33, 42 call this--> 
 			
-				alert("You found secret #" + num);
+				document.getElementById(num).checked = true;
+				var x = event.keyCode;
+				if (x == 49)
+				{	
+					document.getElementById(1).checked = true;
+				}
 		    }
 			function secretIf(condition,num){
 			
@@ -21,7 +26,7 @@
 		</script>
 	</head>
 
-	<body alink="#000000" link="#000000" vlink="#000000">
+	<body alink="#000000" link="#000000" vlink="#000000" onresize="secret(24);" onbeforeprint="secret(38);">
 	<audio src="HexagonForce.mp3" autoplay loop>
 		audio not supported :(
 	</audio>
@@ -32,7 +37,7 @@
 			<th>A</th>
 			<th>2</th>
 			<th>3</th>
-			<th>4</th>
+			<th draggable="true" ondrag="secret(32);">4</th>
 			<th>5</th>
 			<th>6</th>
 			<th>7</th>
@@ -61,7 +66,7 @@
 		</tr>
 		<tr> <!-- spades -->
 			<th><input type="button" value="&#9824" onclick="sClicks++;"/></th>
-			<td> A &#9824 </td>
+			<td oncopy="secret(29);"> A &#9824 </td>
 			<td> 2 &#9824 </td>
 			<td> 3 &#9824 </td>
 			<td> 4 &#9824 </td>
@@ -105,62 +110,65 @@
 			<td> 10 &#9827 </td>
 			<td> J &#9827 </td>
 			<td> Q &#9827 </td>
-			<td> K &#9827 </td>
+			<td oncut="secret(52);"> K &#9827 </td>
 		</tr>
 	</table>
 	<form>
-	<input type="checkbox" name="subject" value=" 1">  1
-<input type="checkbox" name="subject" value=" 2">  2
-<input type="checkbox" name="subject" value=" 3">  3
-<input type="checkbox" name="subject" value=" 4">  4
-<input type="checkbox" name="subject" value=" 5">  5
-<input type="checkbox" name="subject" value=" 6">  6
-<input type="checkbox" name="subject" value=" 7">  7
-<input type="checkbox" name="subject" value=" 8">  8
-<input type="checkbox" name="subject" value=" 9">  9
-<input type="checkbox" name="subject" value="10"> 10
-<input type="checkbox" name="subject" value="11"> 11
-<input type="checkbox" name="subject" value="12"> 12
-<input type="checkbox" name="subject" value="13"> 13
-<input type="checkbox" name="subject" value="14"> 14
-<input type="checkbox" name="subject" value="15"> 15
-<input type="checkbox" name="subject" value="16"> 16
-<input type="checkbox" name="subject" value="17"> 17
-<input type="checkbox" name="subject" value="18"> 18
-<input type="checkbox" name="subject" value="19"> 19
-<input type="checkbox" name="subject" value="20"> 20
-<input type="checkbox" name="subject" value="21"> 21
-<input type="checkbox" name="subject" value="22"> 22
-<input type="checkbox" name="subject" value="23"> 23
-<input type="checkbox" name="subject" value="24"> 24
-<input type="checkbox" name="subject" value="25"> 25
-<input type="checkbox" name="subject" value="26"> 26
-<input type="checkbox" name="subject" value="27"> 27
-<input type="checkbox" name="subject" value="28"> 28
-<input type="checkbox" name="subject" value="29"> 29
-<input type="checkbox" name="subject" value="30"> 30
-<input type="checkbox" name="subject" value="31"> 31
-<input type="checkbox" name="subject" value="32"> 32
-<input type="checkbox" name="subject" value="33"> 33
-<input type="checkbox" name="subject" value="34"> 34
-<input type="checkbox" name="subject" value="35"> 35
-<input type="checkbox" name="subject" value="36"> 36
-<input type="checkbox" name="subject" value="37"> 37
-<input type="checkbox" name="subject" value="38"> 38
-<input type="checkbox" name="subject" value="39"> 39
-<input type="checkbox" name="subject" value="40"> 40
-<input type="checkbox" name="subject" value="41"> 41
-<input type="checkbox" name="subject" value="42"> 42
-<input type="checkbox" name="subject" value="43"> 43
-<input type="checkbox" name="subject" value="44"> 44
-<input type="checkbox" name="subject" value="45"> 45
-<input type="checkbox" name="subject" value="46"> 46
-<input type="checkbox" name="subject" value="47"> 47
-<input type="checkbox" name="subject" value="48"> 48
-<input type="checkbox" name="subject" value="49"> 49
-<input type="checkbox" name="subject" value="50"> 50
-<input type="checkbox" name="subject" value="51"> 51
-<input type="checkbox" name="subject" value="52"> 52
+<input type="checkbox" name="subject" value=" 1" id="1"> 1
+<input type="checkbox" name="subject" value=" 2" id="2"> 2
+<input type="checkbox" name="subject" value=" 3" id="3"> 3
+<input type="checkbox" name="subject" value=" 4" id="4"> 4
+<input type="checkbox" name="subject" value=" 5" id="5"> 5
+<input type="checkbox" name="subject" value=" 6" id="6"> 6
+<input type="checkbox" name="subject" value=" 7" id="7"> 7
+<input type="checkbox" name="subject" value=" 8" id="8"> 8
+<input type="checkbox" name="subject" value=" 9" id="9"> 9
+<input type="checkbox" name="subject" value=" 10" id="10"> 10
+<input type="checkbox" name="subject" value=" 11" id="11"> 11
+<input type="checkbox" name="subject" value=" 12" id="12"> 12
+<input type="checkbox" name="subject" value=" 13" id="13"> 13
+<br/>
+<input type="checkbox" name="subject" value=" 14" id="14"> 14
+<input type="checkbox" name="subject" value=" 15" id="15"> 15
+<input type="checkbox" name="subject" value=" 16" id="16"> 16
+<input type="checkbox" name="subject" value=" 17" id="17"> 17
+<input type="checkbox" name="subject" value=" 18" id="18"> 18
+<input type="checkbox" name="subject" value=" 19" id="19"> 19
+<input type="checkbox" name="subject" value=" 20" id="20"> 20
+<input type="checkbox" name="subject" value=" 21" id="21"> 21
+<input type="checkbox" name="subject" value=" 22" id="22"> 22
+<input type="checkbox" name="subject" value=" 23" id="23"> 23
+<input type="checkbox" name="subject" value=" 24" id="24"> 24
+<input type="checkbox" name="subject" value=" 25" id="25"> 25
+<input type="checkbox" name="subject" value=" 26" id="26"> 26
+<br/>
+<input type="checkbox" name="subject" value=" 27" id="27"> 27
+<input type="checkbox" name="subject" value=" 28" id="28"> 28
+<input type="checkbox" name="subject" value=" 29" id="29"> 29
+<input type="checkbox" name="subject" value=" 30" id="30"> 30
+<input type="checkbox" name="subject" value=" 31" id="31"> 31
+<input type="checkbox" name="subject" value=" 32" id="32"> 32
+<input type="checkbox" name="subject" value=" 33" id="33"> 33
+<input type="checkbox" name="subject" value=" 34" id="34"> 34
+<input type="checkbox" name="subject" value=" 35" id="35"> 35
+<input type="checkbox" name="subject" value=" 36" id="36"> 36
+<input type="checkbox" name="subject" value=" 37" id="37"> 37
+<input type="checkbox" name="subject" value=" 38" id="38"> 38
+<input type="checkbox" name="subject" value=" 39" id="39"> 39
+<br/>
+<input type="checkbox" name="subject" value=" 40" id="40"> 40
+<input type="checkbox" name="subject" value=" 41" id="41"> 41
+<input type="checkbox" name="subject" value=" 42" id="42"> 42
+<input type="checkbox" name="subject" value=" 43" id="43"> 43
+<input type="checkbox" name="subject" value=" 44" id="44"> 44
+<input type="checkbox" name="subject" value=" 45" id="45"> 45
+<input type="checkbox" name="subject" value=" 46" id="46"> 46
+<input type="checkbox" name="subject" value=" 47" id="47"> 47
+<input type="checkbox" name="subject" value=" 48" id="48"> 48
+<input type="checkbox" name="subject" value=" 49" id="49"> 49
+<input type="checkbox" name="subject" value=" 50" id="50"> 50
+<input type="checkbox" name="subject" value=" 51" id="51"> 51
+<input type="checkbox" name="subject" value=" 52" id="52"> 52
 </form>
 	</body>
 </html>
