@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html onkeydown="secret(19);" onmousewheel="secret(7);" onkeyup="secret(33);" ondblclick="secret(2);" >
+<html onkeydown="keyPress();" onmousewheel="secret(7);" onkeyup="secret(33);" ondblclick="secret(2);" >
 	<head>
 		<title>Treaure Hunt</title>
 		<script type="text/javascript">
@@ -7,26 +7,65 @@
 			var sClicks = 0; <!-- Number of Spade button clicks -->
 			var dClicks = 0; <!-- Number of Diamond button clicks -->
 			var cClicks = 0; <!-- Number of Club button clicks -->
-			function secret(num){ <!--Secrets 3, 7, 10, 19, 20, 33, 42 call this--> 
+			var log = "";
+			function secret(num){ <!--Secrets 2, 3, 4, 7, 10, 14, 19, 20, 24, 33, 38, 42, 50, 51, 52 call this--> 
 			
-				document.getElementById(num).checked = true;
-				var x = event.keyCode;
+				if(document.getElementById(num).checked == false)
+				{
+					document.getElementById(num).checked = true;
+					alert("You found secret #" + num + "!");
+					return;
+				}
+				/*var x = event.keyCode;
 				if (x == 49)
 				{	
 					document.getElementById(1).checked = true;
-				}
+				}*/
 		    }
-			function secretIf(condition,num){
-			
+			function secretIf(condition,num){ <!-- Secrets 21, -->
+				if(condition)
+				{
+					secret(num);
+				}
+			}
+			function keyPress(){ <!-- Secrets 1, 19, 26 -->
+				var x = event.keyCode;
+				log += String.fromCharCode(x);
+				log = log.toLowerCase();
+				log = log.trim();
+				if(document.getElementById(1).checked == false && document.getElementById(19).checked && x == 49)
+				{
+					secret(1);
+				}
+				else if(document.getElementById(1).checked == false && document.getElementById(19).checked == false)
+				{
+					secret(19);
+				}
+				else if(log.search("queenofspades") != -1)
+				{
+					secret(25);
+				}
+				else if(log.search("abcdefghijklmnopqrstuvwxyz") != -1)
+				{
+					secret(26);
+				}
+			}
+			function secret9(){
+				secret(9);
 			}
 			function secret20(){
 				if(hClicks > 1 && sClicks > 1 && dClicks > 1 && cClicks > 1)
 					secret(20);
 			}
 		</script>
+		<style>
+			h1 {
+				text-shadow: 2px 2px 2px;
+			}
+		</style>
 	</head>
 
-	<body alink="#000000" link="#000000" vlink="#000000" onresize="secret(24);" onbeforeprint="secret(38);">
+	<body alink="#000000" link="#000000" vlink="#000000" onresize="secret(24);" onbeforeprint="secret(38);" onoffline="secret(51);" onload="setTimeout(secret9, 1200000);">
 	<audio src="HexagonForce.mp3" autoplay loop>
 		audio not supported :(
 	</audio>
@@ -37,7 +76,7 @@
 			<th>A</th>
 			<th>2</th>
 			<th>3</th>
-			<th draggable="true" ondrag="secret(32);">4</th>
+			<th draggable="true" ondrag="secret(4);">4</th>
 			<th>5</th>
 			<th>6</th>
 			<th>7</th>
@@ -48,7 +87,7 @@
 			<th>Q</th>
 			<th>K</th>
 		</tr>
-		<tr> <!-- hearts -->
+		<tr style = "color:#FF0000;"> <!-- hearts -->
 			<th><input type="button" value="&#9829" onclick="hClicks++;"/></th>
 			<td> A &#9829 </td> 
 			<td> 2 &#9829 </td>
@@ -66,21 +105,21 @@
 		</tr>
 		<tr> <!-- spades -->
 			<th><input type="button" value="&#9824" onclick="sClicks++;"/></th>
-			<td oncopy="secret(29);"> A &#9824 </td>
+			<td oncopy="secret(14);"> A &#9824 </td>
 			<td> 2 &#9824 </td>
 			<td> 3 &#9824 </td>
 			<td> 4 &#9824 </td>
 			<td> 5 &#9824 </td>
 			<td onmouseover="sClicks = 0;"> 6 &#9824 </td> <!-- Secret #19 called in <html> tag -->
 			<td onclick="secret20();"> 7 &#9824 </td>
-			<td onclick="if(sClicks == 8) secret(21);"> 8 &#9824 </td>
+			<td onclick="secretIf(sClicks == 8,21);"> 8 &#9824 </td> 
 			<td> 9 &#9824 </td>
 			<td> 10 &#9824 </td>
 			<td> J &#9824 </td>
 			<td> Q &#9824 </td>
 			<td> K &#9824 </td>
 		</tr>
-		<tr> <!-- diamonds -->
+		<tr style = "color:#FF0000;"> <!-- diamonds -->
 			<th><input type="button" value="&#9830" onclick="dClicks++;"/></th>
 			<td> A &#9830 </td>
 			<td> 2 &#9830 </td>
@@ -100,7 +139,7 @@
 			<th><input type="button" value="&#9827" onclick="cClicks++;"/></th>
 			<td> A &#9827 </td>
 			<td> 2 &#9827 </td>
-			<td onmouseover="secret(42);"> 3 <a href="TH_Dark_World.html">&#9827 </a></td>
+			<td onmouseover="secret(42);"> 3 <a href="TH_Dark_World.html" style="cursor:text">&#9827 </a></td>
 			<td> 4 &#9827 </td>
 			<td> 5 &#9827 </td>
 			<td> 6 &#9827 </td>
@@ -114,15 +153,15 @@
 		</tr>
 	</table>
 	<form>
-<input type="checkbox" name="subject" value=" 1" id="1"> 1
-<input type="checkbox" name="subject" value=" 2" id="2"> 2
-<input type="checkbox" name="subject" value=" 3" id="3"> 3
-<input type="checkbox" name="subject" value=" 4" id="4"> 4
-<input type="checkbox" name="subject" value=" 5" id="5"> 5
-<input type="checkbox" name="subject" value=" 6" id="6"> 6
-<input type="checkbox" name="subject" value=" 7" id="7"> 7
-<input type="checkbox" name="subject" value=" 8" id="8"> 8
-<input type="checkbox" name="subject" value=" 9" id="9"> 9
+<input type="checkbox" name="subject" value=" 1" id="1"> 1&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 2" id="2"> 2&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 3" id="3"> 3&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 4" id="4"> 4&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 5" id="5"> 5&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 6" id="6"> 6&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 7" id="7"> 7&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 8" id="8"> 8&nbsp&nbsp
+<input type="checkbox" name="subject" value=" 9" id="9"> 9&nbsp&nbsp
 <input type="checkbox" name="subject" value=" 10" id="10"> 10
 <input type="checkbox" name="subject" value=" 11" id="11"> 11
 <input type="checkbox" name="subject" value=" 12" id="12"> 12
@@ -166,7 +205,7 @@
 <input type="checkbox" name="subject" value=" 47" id="47"> 47
 <input type="checkbox" name="subject" value=" 48" id="48"> 48
 <input type="checkbox" name="subject" value=" 49" id="49"> 49
-<input type="checkbox" name="subject" value=" 50" id="50"> 50
+<input type="checkbox" name="subject" value=" 50" id="50" onmouseover="secret(50);"> 50
 <input type="checkbox" name="subject" value=" 51" id="51"> 51
 <input type="checkbox" name="subject" value=" 52" id="52"> 52
 </form>
