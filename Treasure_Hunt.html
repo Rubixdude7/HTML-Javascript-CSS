@@ -1,41 +1,78 @@
 <!DOCTYPE html>
-<html onkeydown="keyPress();" onmousewheel="secret(7);" onkeyup="secret(33);" ondblclick="secret(2);" >
+<html onkeydown = "keyPress();" onwheel = "wheel();" ondblclick = "secret(2);">
 	<head>
 		<title>Treaure Hunt</title>
-		<script type="text/javascript">
+		<script type = "text/javascript">
 			var hClicks = 0; <!-- Number of Heart button clicks -->
 			var sClicks = 0; <!-- Number of Spade button clicks -->
 			var dClicks = 0; <!-- Number of Diamond button clicks -->
 			var cClicks = 0; <!-- Number of Club button clicks -->
+			var totalSecrets = 0;
+			var s31Found = false;
+			var s33MouseOvers = 0;
+			var s35WheelMoves = 0;
+			var s50MouseOverTime = 0;
 			var log = "";
-			function secret(num){ <!--Secrets 2, 3, 4, 7, 10, 14, 19, 20, 24, 33, 38, 42, 50, 51, 52 call this--> 
+			function clearClicks(){
+				hClicks = 0;
+				sClicks = 0;
+				dClicks = 0;
+				cClicks = 0;
+			}
+			function secret(num){ <!-- Secrets 2,3,4,10,  14,19,20,24,  38,  42,50,51,52 call this --> 
 			
 				if(document.getElementById(num).checked == false)
 				{
 					document.getElementById(num).checked = true;
 					alert("You found secret #" + num + "!");
+					totalSecrets++;
 					return;
 				}
-				/*var x = event.keyCode;
-				if (x == 49)
-				{	
-					document.getElementById(1).checked = true;
-				}*/
 		    }
-			function secretIf(condition,num){ <!-- Secrets 21, -->
+			function wheel(){ <!-- Secrets 7, 35 -->
+				s35WheelMoves++;
+				if(s35WheelMoves > 500)
+					secret(35);
+				else
+					secret(7);
+			}
+			function secretIf(condition,num){ <!-- Secrets 5,6  15,21,  30,33,36,  41 -->
 				if(condition)
 				{
 					secret(num);
 				}
 			}
-			function keyPress(){ <!-- Secrets 1, 19, 26 -->
+			function checkSecretsThirdRow(){
+				secretIf(dClicks != 0 && dClicks == totalSecretsThirdRow(),30);
+			}
+			function totalSecretsThirdRow(){
+				var total = 0;
+				for(var i = 27; i < 40; i++)
+				{
+					total += document.getElementById(i).checked;
+				}
+				return total;
+			}
+			function checkSecretsFourthRow(){
+				secretIf(cClicks >= 41,41);
+			}			
+			function keyPress(){ <!-- Secrets 1,9,13,  19,25,26,  40 -->
 				var x = event.keyCode;
 				log += String.fromCharCode(x);
 				log = log.toLowerCase();
 				log = log.trim();
+				if(log.length > 30) {log = log.substring(1,31);}
 				if(document.getElementById(1).checked == false && document.getElementById(19).checked && x == 49)
 				{
 					secret(1);
+				}
+				else if(log.search("123456789") != -1)
+				{
+					secret(9);
+				}
+				else if(log.search("king") != -1)
+				{
+					secret(13);
 				}
 				else if(document.getElementById(1).checked == false && document.getElementById(19).checked == false)
 				{
@@ -49,13 +86,25 @@
 				{
 					secret(26);
 				}
+				else if(log.search("a") != -1)
+				{
+					secret(40);
+				}
 			}
-			function secret9(){
-				secret(9);
+			function Increment55(){
+				s50MouseOverTime++;
 			}
-			function secret20(){
-				if(hClicks > 1 && sClicks > 1 && dClicks > 1 && cClicks > 1)
-					secret(20);
+			function secret8(){
+				secret(8);
+			}
+			function secret31(){
+				if(s31Found == false){
+					alert("You found secret #31!");
+					s31Found = true;
+					totalSecrets++;
+					return true;
+				}
+				return false;
 			}
 		</script>
 		<style>
@@ -65,54 +114,55 @@
 		</style>
 	</head>
 
-	<body alink="#000000" link="#000000" vlink="#000000" onresize="secret(24);" onbeforeprint="secret(38);" onoffline="secret(51);" onload="setTimeout(secret9, 1200000);">
-	<audio src="HexagonForce.mp3" autoplay loop>
+	<body alink = "#000000" link = "#000000" vlink = "#000000" onresize = "secret(24);" onbeforeprint = "secret(38);" onoffline = "secret(51);" onload = "setTimeout(secret8, 600000);"
+	onmousemove = "secretIf(event.offsetX == 0 && event.offsetY == 0, 49);">
+	<audio src = "HexagonForce.mp3" autoplay loop>
 		audio not supported :(
 	</audio>
-	<h1>Treasure Hunt</h1>
-	<table border="1" cellpadding="10" cellspacing="3">
+	<h1>Treasure Hunt: Find All 52 Secrets</h1>
+	<table border = "1" cellpadding = "10" cellspacing = "3">
 		<tr> 
-			<th>XXXXX</th>
+			<th onclick = "clearClicks();">XXXXX</th>
 			<th>A</th>
 			<th>2</th>
 			<th>3</th>
-			<th draggable="true" ondrag="secret(4);">4</th>
-			<th>5</th>
+			<th draggable = "true" ondrag = "secret(4);">4</th>
+			<th onmousedown = "secretIf(event.button == 1 || event.button == 4,5);">5</th>
 			<th>6</th>
 			<th>7</th>
-			<th>8</th>
-			<th style="cursor:wait">9</th>
+			<th style = "cursor:wait">8</th>
+			<th>9</th>
 			<th>10</th>
 			<th>J</th>
 			<th>Q</th>
 			<th>K</th>
 		</tr>
 		<tr style = "color:#FF0000;"> <!-- hearts -->
-			<th><input type="button" value="&#9829" onclick="hClicks++;"/></th>
+			<th><input type = "button" value = "&#9829" onclick = "hClicks++; secretIf(hClicks == totalSecrets,6);"/></th>
 			<td> A &#9829 </td> 
 			<td> 2 &#9829 </td>
-			<td onclick="secret(3);"> 3 &#9829 </td>
+			<td onclick = "secret(3);"> 3 &#9829 </td>
 			<td> 4 &#9829 </td>
 			<td> 5 &#9829 </td>
-			<td> 6 &#9829 </td>
-			<td onmouseover="hClicks = 0;"> 7 &#9829 </td> <!-- Secret #7 called in <html> tag -->
+			<td> 6 <u>&#9829</u> </td>
+			<td> 7 &#9829 </td>
 			<td> 8 &#9829 </td>
 			<td> 9 &#9829 </td>
-			<td ondblclick="secret(10);"> 10 &#9829 </td>
+			<td ondblclick = "secret(10);"> 10 &#9829 </td>
 			<td> J &#9829 </td>
 			<td> Q &#9829 </td>
 			<td> K &#9829 </td>
 		</tr>
 		<tr> <!-- spades -->
-			<th><input type="button" value="&#9824" onclick="sClicks++;"/></th>
-			<td oncopy="secret(14);"> A &#9824 </td>
-			<td> 2 &#9824 </td>
+			<th><input type = "button" value = "&#9824" onclick = "sClicks++;"/></th>
+			<td oncopy = "secret(14);"> A &#9824 </td>
+			<td onmousedown = "secretIf(event.button == 2,15);"> 2 &#9824 </td>
 			<td> 3 &#9824 </td>
 			<td> 4 &#9824 </td>
 			<td> 5 &#9824 </td>
-			<td onmouseover="sClicks = 0;"> 6 &#9824 </td> <!-- Secret #19 called in <html> tag -->
-			<td onclick="secret20();"> 7 &#9824 </td>
-			<td onclick="secretIf(sClicks == 8,21);"> 8 &#9824 </td> 
+			<td> 6 &#9824 </td>
+			<td onclick = "secretIf(hClicks > 1 && sClicks > 1 && dClicks > 1 && cClicks > 1,20);"> 7 <u>&#9824</u> </td>
+			<td onclick = "secretIf(sClicks >= 8,21);"> 8 <u>&#9824</u> </td> 
 			<td> 9 &#9824 </td>
 			<td> 10 &#9824 </td>
 			<td> J &#9824 </td>
@@ -120,26 +170,26 @@
 			<td> K &#9824 </td>
 		</tr>
 		<tr style = "color:#FF0000;"> <!-- diamonds -->
-			<th><input type="button" value="&#9830" onclick="dClicks++;"/></th>
+			<th><input type="button" value="&#9830" onclick="dClicks++; checkSecretsThirdRow();"/></th>
 			<td> A &#9830 </td>
 			<td> 2 &#9830 </td>
 			<td> 3 &#9830 </td>
-			<td> 4 &#9830 </td>
+			<td> 4 <u>&#9830</u> </td>
 			<td> 5 &#9830 </td>
 			<td> 6 &#9830 </td>
-			<td onmouseover="dClicks = 0;"> 7 &#9830 </td>
+			<td onmouseover = "s33MouseOvers++; secretIf(s33MouseOvers >= 25, 33);"> 7 &#9830 </td>
 			<td> 8 &#9830 </td>
 			<td> 9 &#9830 </td>
-			<td> 10 &#9830 </td>
+			<td onwheel = "secretIf(document.getElementById(7).checked,36);"> 10 &#9830 </td>
 			<td> J &#9830 </td>
 			<td> Q &#9830 </td>
 			<td> K &#9830 </td>
 		</tr>
 		<tr> <!-- clubs -->
-			<th><input type="button" value="&#9827" onclick="cClicks++;"/></th>
+			<th><input type = "button" value = "&#9827" onclick = "cClicks++; checkSecretsFourthRow();"/></th>
 			<td> A &#9827 </td>
-			<td> 2 &#9827 </td>
-			<td onmouseover="secret(42);"> 3 <a href="TH_Dark_World.html" style="cursor:text">&#9827 </a></td>
+			<td > 2 <u>&#9827</u> </td>
+			<td onmouseover = "secret(42);"> 3 <a href = "TH_Dark_World.html" style = "cursor:text">&#9827 </a></td>
 			<td> 4 &#9827 </td>
 			<td> 5 &#9827 </td>
 			<td> 6 &#9827 </td>
@@ -149,65 +199,65 @@
 			<td> 10 &#9827 </td>
 			<td> J &#9827 </td>
 			<td> Q &#9827 </td>
-			<td oncut="secret(52);"> K &#9827 </td>
+			<td oncut = "secret(52);"> K &#9827 </td>
 		</tr>
 	</table>
 	<form>
-<input type="checkbox" name="subject" value=" 1" id="1"> 1&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 2" id="2"> 2&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 3" id="3"> 3&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 4" id="4"> 4&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 5" id="5"> 5&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 6" id="6"> 6&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 7" id="7"> 7&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 8" id="8"> 8&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 9" id="9"> 9&nbsp&nbsp
-<input type="checkbox" name="subject" value=" 10" id="10"> 10
-<input type="checkbox" name="subject" value=" 11" id="11"> 11
-<input type="checkbox" name="subject" value=" 12" id="12"> 12
-<input type="checkbox" name="subject" value=" 13" id="13"> 13
+<input type="checkbox" name="subject" value=" 1" id="1" onclick="return false;"> 1&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 2" id="2" onclick="return false;"> 2&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 3" id="3" onclick="return false;"> 3&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 4" id="4" onclick="return false;"> 4&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 5" id="5" onclick="return false;"> 5&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 6" id="6" onclick="return false;"> 6&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 7" id="7" onclick="return false;"> 7&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 8" id="8" onclick="return false;"> 8&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 9" id="9" onclick="return false;"> 9&nbsp&nbsp <!-- -->
+<input type="checkbox" name="subject" value=" 10" id="10" onclick="return false;"> 10 <!-- -->
+<input type="checkbox" name="subject" value=" 11" id="11" onclick="return false;"> 11
+<input type="checkbox" name="subject" value=" 12" id="12" onclick="return false;"> 12
+<input type="checkbox" name="subject" value=" 13" id="13" onclick="return false;"> 13 <!-- -->
 <br/>
-<input type="checkbox" name="subject" value=" 14" id="14"> 14
-<input type="checkbox" name="subject" value=" 15" id="15"> 15
-<input type="checkbox" name="subject" value=" 16" id="16"> 16
-<input type="checkbox" name="subject" value=" 17" id="17"> 17
-<input type="checkbox" name="subject" value=" 18" id="18"> 18
-<input type="checkbox" name="subject" value=" 19" id="19"> 19
-<input type="checkbox" name="subject" value=" 20" id="20"> 20
-<input type="checkbox" name="subject" value=" 21" id="21"> 21
-<input type="checkbox" name="subject" value=" 22" id="22"> 22
-<input type="checkbox" name="subject" value=" 23" id="23"> 23
-<input type="checkbox" name="subject" value=" 24" id="24"> 24
-<input type="checkbox" name="subject" value=" 25" id="25"> 25
-<input type="checkbox" name="subject" value=" 26" id="26"> 26
+<input type="checkbox" name="subject" value=" 14" id="14" onclick="return false;"> 14 <!-- -->
+<input type="checkbox" name="subject" value=" 15" id="15" onclick="return false;"> 15 <!-- -->
+<input type="checkbox" name="subject" value=" 16" id="16" onclick="return false;"> 16
+<input type="checkbox" name="subject" value=" 17" id="17" onclick="return false;"> 17
+<input type="checkbox" name="subject" value=" 18" id="18" onclick="return false;"> 18
+<input type="checkbox" name="subject" value=" 19" id="19" onclick="return false;"> 19 <!-- -->
+<input type="checkbox" name="subject" value=" 20" id="20" onclick="return false;"> 20 <!-- -->
+<input type="checkbox" name="subject" value=" 21" id="21" onclick="return false;"> 21 <!-- -->
+<input type="checkbox" name="subject" value=" 22" id="22" onclick="return false;"> 22
+<input type="checkbox" name="subject" value=" 23" id="23" onclick="return false;"> 23
+<input type="checkbox" name="subject" value=" 24" id="24" onclick="return false;"> 24 <!-- -->
+<input type="checkbox" name="subject" value=" 25" id="25" onclick="return false;"> 25 <!-- -->
+<input type="checkbox" name="subject" value=" 26" id="26" onclick="return false;"> 26 <!-- -->
 <br/>
-<input type="checkbox" name="subject" value=" 27" id="27"> 27
-<input type="checkbox" name="subject" value=" 28" id="28"> 28
-<input type="checkbox" name="subject" value=" 29" id="29"> 29
-<input type="checkbox" name="subject" value=" 30" id="30"> 30
-<input type="checkbox" name="subject" value=" 31" id="31"> 31
-<input type="checkbox" name="subject" value=" 32" id="32"> 32
-<input type="checkbox" name="subject" value=" 33" id="33"> 33
-<input type="checkbox" name="subject" value=" 34" id="34"> 34
-<input type="checkbox" name="subject" value=" 35" id="35"> 35
-<input type="checkbox" name="subject" value=" 36" id="36"> 36
-<input type="checkbox" name="subject" value=" 37" id="37"> 37
-<input type="checkbox" name="subject" value=" 38" id="38"> 38
-<input type="checkbox" name="subject" value=" 39" id="39"> 39
+<input type="checkbox" name="subject" value=" 27" id="27" onclick="return false;"> 27
+<input type="checkbox" name="subject" value=" 28" id="28" onclick="return false;"> 28
+<input type="checkbox" name="subject" value=" 29" id="29" onclick="return false;"> 29
+<input type="checkbox" name="subject" value=" 30" id="30" onclick="return false;"> 30 <!-- -->
+<input type="checkbox" name="subject" value=" 31" id="31" onclick="return secret31();"> 31 <!-- -->
+<input type="checkbox" name="subject" value=" 32" id="32" onclick="return false;"> 32
+<input type="checkbox" name="subject" value=" 33" id="33" onclick="return false;"> 33 <!-- -->
+<input type="checkbox" name="subject" value=" 34" id="34" onclick="return false;"> 34
+<input type="checkbox" name="subject" value=" 35" id="35" onclick="return false;"> 35 <!-- -->
+<input type="checkbox" name="subject" value=" 36" id="36" onclick="return false;"> 36 <!-- -->
+<input type="checkbox" name="subject" value=" 37" id="37" onclick="return false;"> 37
+<input type="checkbox" name="subject" value=" 38" id="38" onclick="return false;"> 38 <!-- -->
+<input type="checkbox" name="subject" value=" 39" id="39" onclick="return false;"> 39
 <br/>
-<input type="checkbox" name="subject" value=" 40" id="40"> 40
-<input type="checkbox" name="subject" value=" 41" id="41"> 41
-<input type="checkbox" name="subject" value=" 42" id="42"> 42
-<input type="checkbox" name="subject" value=" 43" id="43"> 43
-<input type="checkbox" name="subject" value=" 44" id="44"> 44
-<input type="checkbox" name="subject" value=" 45" id="45"> 45
-<input type="checkbox" name="subject" value=" 46" id="46"> 46
-<input type="checkbox" name="subject" value=" 47" id="47"> 47
-<input type="checkbox" name="subject" value=" 48" id="48"> 48
-<input type="checkbox" name="subject" value=" 49" id="49"> 49
-<input type="checkbox" name="subject" value=" 50" id="50" onmouseover="secret(50);"> 50
-<input type="checkbox" name="subject" value=" 51" id="51"> 51
-<input type="checkbox" name="subject" value=" 52" id="52"> 52
+<input type="checkbox" name="subject" value=" 40" id="40" onclick="return false;"> 40 <!-- -->
+<input type="checkbox" name="subject" value=" 41" id="41" onclick="return false;"> 41 <!-- -->
+<input type="checkbox" name="subject" value=" 42" id="42" onclick="return false;"> 42 <!-- -->
+<input type="checkbox" name="subject" value=" 43" id="43" onclick="return false;"> 43
+<input type="checkbox" name="subject" value=" 44" id="44" onclick="return false;"> 44
+<input type="checkbox" name="subject" value=" 45" id="45" onclick="return false;"> 45
+<input type="checkbox" name="subject" value=" 46" id="46" onclick="return false;"> 46
+<input type="checkbox" name="subject" value=" 47" id="47" onclick="return false;"> 47
+<input type="checkbox" name="subject" value=" 48" id="48" onclick="return false;"> 48
+<input type="checkbox" name="subject" value=" 49" id="49" onclick="return false;"> 49 <!-- -->
+<input type="checkbox" name="subject" value=" 50" id="50" onmouseover = "setInterval(Increment55,1);" onmouseout = "secretIf(s50MouseOverTime >= 500, 50); s50MouseOverTime = 0;"> 50 <!-- -->
+<input type="checkbox" name="subject" value=" 51" id="51" onclick="return false;"> 51 <!-- -->
+<input type="checkbox" name="subject" value=" 52" id="52" onclick="return false;"> 52 <!-- -->
 </form>
 	</body>
 </html>

@@ -1,0 +1,37 @@
+The goal of the treasure hunt is to find all 52 secrets. The browser will notify you upon discovering a secret.
+The solution for the numbered secret often (but not always) corresponds to its number or its corresponding playing card on the board.
+This correspondence allows the hardest secrets to be secretive yet realisticly guessable through trial and error.
+
+1 : press the '1' key
+2 : double click anywhere
+3 : click the 3 of hearts
+4 : drag the '4' on the top row
+5 : click the '5' on the top row with the middle mouse button
+7 : scroll the mouse wheel
+8 : wait 10 minutes
+9 : type "123456789" on the keyboard
+10: double click the ten of hearts
+13: type "king" on the keyboard
+14: highlight the ace of spades and copy it
+15: right click the 2 of spades
+19: press any key
+20: click the seven of spades while all buttons have been click at least twice
+21: click the 8 of spades while the spades button has been clicks at least 8 times
+24: resize the page
+25: type "queen of spades"
+26: type the entire alphabet
+30: click the diamonds button for as many secrets unlocked on the third row AND must not be zero
+31: click the "31" check box
+33: hover the mouse over the 7 of diamonds 25 times
+35: scroll the mouse wheel 500 times; (this takes MUCH less time than you might think)
+36: scroll the mouse wheel while hovering the cursor over the 10 of diamonds
+38: print the page
+40: type 'a' on the keyboard
+41: click the clubs button 41 times
+42: hover the mouse over the 3 of clubs
+49: hover the mouse over the bottom left corner of the board
+50: hover the mouse over the '50' check box for 1 second, then move the mouse out
+51: disconnect from the internet
+52: highlight the king of clubs, and press 'ctrl' + 'X'
+
+Clicking the "XXXXX" on the top left resets the number of clicks for each button back to zero
